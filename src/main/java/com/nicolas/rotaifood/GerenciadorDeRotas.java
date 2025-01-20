@@ -44,10 +44,19 @@ public class GerenciadorDeRotas {
     //bubblesort, ineficiente em caso de varios parceiros
     public Motorista[] ordenaPrioridadeMotorista(Motorista[] motor) {
         for (int i = 0; i < motor.length - 1; i++) {
+
+            if (motor[i] == null) {
+                continue;
+            }
+
             for (int j = 0; j < motor.length - 1 - i; j++) {
+
+                if (motor[j] == null || motor[j + 1] == null) {
+                    continue;
+                }
+
                 if (motor[j].getPrioridade() < motor[j + 1].getPrioridade()
-                        ||
-                        (motor[j].getPrioridade() == motor[j + 1].getPrioridade()
+                        || (motor[j].getPrioridade() == motor[j + 1].getPrioridade()
                         && motor[j].getKmAteloja() > motor[j + 1].getKmAteloja())) {
                     Motorista temp = motor[j];
                     motor[j] = motor[j + 1];
@@ -67,6 +76,7 @@ public class GerenciadorDeRotas {
 
             for (int i = 0; i < motor.length; i++) {
                 if (motor[i].getRodando()) {
+                    MotoristasAptosASeguirRota[i] = null;
                     continue;
                 }
                 motor[i].setKmAteloja();
@@ -80,7 +90,7 @@ public class GerenciadorDeRotas {
                 if (r.getAceitarota()) {
                     break;
                 }
-                if (moto.getRodando()) {
+                if (moto == null || moto.getRodando()) {
                     continue;
                 }
                 NextRota = rotaAceita(moto, r, scan);
@@ -89,6 +99,7 @@ public class GerenciadorDeRotas {
                 }
             }
         }
+        System.out.println(MotoristasAptosASeguirRota);
         scan.close();
     }
 }
